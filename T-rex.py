@@ -229,7 +229,6 @@ def main():
 
 
 
-
 def menu(death_count):
     global points
     run = True
@@ -238,9 +237,9 @@ def menu(death_count):
         font = pygame.font.Font('freesansbold.ttf' , 30)
         
         if death_count == 0:
-            text = font.render("Press any Key to Start", True, (0, 0, 0))
+            text = font.render("Press SpaceBar to Start", True, (0, 0, 0))
         elif death_count > 0:
-            text = font.render("Press any Key to Restart", True, (0, 0, 0))
+            text = font.render("Press SpaceBar to Restart", True, (0, 0, 0))
             score = font.render("Your Score: " + str(points), True, (0, 0, 0))
             scoreRect = score.get_rect()
             scoreRect.center = (screen_width // 2, screen_height // 2 +50)
@@ -250,10 +249,11 @@ def menu(death_count):
         screen.blit(text, textRect)
         screen.blit(running[0], (screen_width // 2 - 20, screen_height // 2 - 140))
         pygame.display.update()
-        for event in pygame.event.get():
+        for event in pygame.event.get():    #event handeling
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                main()
+                if event.key == pygame.K_SPACE :
+                    main()
 
 menu(death_count=0)
