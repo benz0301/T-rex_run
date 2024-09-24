@@ -18,9 +18,9 @@ large_cactus = [pygame.image.load("Assets\Cactus\LargeCactus1.png"),pygame.image
 
 bird = [pygame.image.load("Assets\Bird\Bird1.png"),pygame.image.load("Assets\Bird\Bird2.png")]
 
-cloud = [pygame.image.load("Assets\other\Cloud.png")]
+cloud = pygame.image.load("Assets\other\Cloud.png")
 
-bg = [pygame.image.load("Assets\other\Track.png")]
+bg = pygame.image.load("Assets\other\Track.png")
 
 class Dinosaur:
     x_pos = 80
@@ -95,14 +95,56 @@ class Dinosaur:
     def draw(self,screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
 
-
+class Cloud:
+    def __init__(self):
+        self.x = screen_width + random.randint(800, 1000)
+        self.y  =random.randint(50, 100)
+        self.image = cloud
+        self.width = self.image.get_width()
+        
+    def update(self):
+        self.x -= game_speed
+        if self.x < -self.width:
+            self.x = screen_width + random.randint(2500, 3000)
+            self.y = random.randint(50, 100)
+        
+    def draw(self,screen):
+        screen.blit(self.image, (self.x, self.y))
         
 
 
 def main():
+    global game_speed, x_pos_bg, y_pos_bg, points
     run = True
     clock = pygame.time.Clock()
     player = Dinosaur()
+    cloud = Cloud()
+    game_speed = 14
+    x_pos_bg = 0
+    y_pos_bg = 380
+    points = 0
+    font = pygame.font.Font('freesansbold.ttf' , 20)
+    
+    def score():
+        global points, game_speed
+        points += 1
+        if points % 100 == 0 :
+            game_speed += 1
+            
+        text = font.render("Points: " + str(points), True, (0, 0, 0))
+        textRect = text.get_rect()
+        textRect.center = (1000, 40)
+        screen.blit(text, textRect)
+        
+    def background():
+        global x_pos_bg, y_pos_bg
+        image_width = bg.get_width()
+        screen.blit(bg, (x_pos_bg, y_pos_bg))
+        screen.blit(bg, (image_width + x_pos_bg, y_pos_bg))
+        if x_pos_bg <= -image_width:
+            screen.blit(bg, (image_width + x_pos_bg, y_pos_bg))
+            x_pos_bg = 0
+        x_pos_bg -= game_speed
 
     
     while run:
@@ -115,6 +157,13 @@ def main():
         
         player.draw(screen)
         player.update(userinput)
+        
+        background()
+        
+        cloud.draw(screen)
+        cloud.update()
+        
+        score()
         
         
         clock.tick(30)
