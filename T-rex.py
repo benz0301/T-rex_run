@@ -32,13 +32,15 @@ bg = pygame.image.load("Assets/other/Track.png")  # Achtergrondafbeelding (de gr
 
 # geluid waneer je iets aanraakt
 def play_jump_sound():
-    jump_sound_effect = jump_sound
-    jump_sound_effect.play()
+    if game_muted == False :
+        jump_sound_effect = jump_sound
+        jump_sound_effect.play()
 
 # om collision sound te spelen
 def play_collision_sound():
-    collision_sound_effect = collision_sound
-    collision_sound_effect.play()
+    if game_muted == False :
+        collision_sound_effect = collision_sound
+        collision_sound_effect.play()
     
 # Dinosaur klasse die de speler bestuurt
 class Dinosaur:
@@ -198,9 +200,9 @@ def toggle_mute():
     global game_muted
     game_muted = not game_muted
     if game_muted:
-        pygame.mixer.music.pause()
+        pygame.mixer.pause()
     else:
-        pygame.mixer.music.unpause()
+        pygame.mixer.unpause()
 # Klasse voor een knop die gebruikt kan worden in het menu
 class Button:
     def __init__(self, text, width, height, pos, font_size, bg_color, text_color):
