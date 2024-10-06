@@ -55,7 +55,7 @@ A classic T-Rex Runner game made by using the pygame library
 
 4. **Run the Game:**
     ```bash
-    python game.py
+    python T-rex.py
     ```
 
 ## How to Play
