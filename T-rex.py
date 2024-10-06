@@ -112,13 +112,18 @@ class Dinosaur:
     # Functie voor springen
     def jump(self):
         self.image = self.jump_img[0]  # Verander afbeelding voor springen
+        
+        if self.dino_jump and self.jump_vel == self.JUMP_vel:  # Controleer of het de eerste sprong is
+            play_jump_sound()  # Speel spronggeluid af bij de eerste sprong
+            
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4  # Verplaats de dino omhoog
-            play_jump_sound()  # Play jump sound
-            self.jump_vel -= 0.8  # Verlaag de snelheid bij elke sprong
+            self.jump_vel -= 0.8  # Verlaag de sprongsnelheid bij elke sprong
+            
         if self.jump_vel < -self.JUMP_vel:  # Als de dino zijn hoogste punt bereikt
             self.dino_jump = False  # Stop met springen
             self.jump_vel = self.JUMP_vel  # Reset de sprongsnelheid
+
 
     # Functie om de dino op het scherm te tekenen
     def draw(self, screen):
